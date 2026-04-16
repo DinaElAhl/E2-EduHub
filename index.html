@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E² EduHub — The All-in-One Educator Platform</title>
+<meta name="description" content="E² EduHub: Free all-in-one educator platform for teachers, parents, homeschoolers, schools and universities. Lesson generator, resource library, weekly planner, assessment tools and E² Teaching Framework.">
+<meta name="keywords" content="education, lesson planner, teacher tools, homeschool, free resources, lesson generator">
+<meta property="og:title" content="E² EduHub — The All-in-One Educator Platform">
+<meta property="og:description" content="Free tools for teachers, parents, homeschoolers, schools & universities worldwide.">
+<meta name="robots" content="index, follow">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --terra:#c1714f;--terra2:#a85d3d;--terra-light:#e8a98a;
+  --rose:#d4888a;--rose-light:#f0bfbf;
+  --sand:#f5e6d3;--sand2:#ede0ce;--sand3:#faf5ef;
+  --olive:#7a8c5e;--olive2:#5d6b47;
+  --blue:#3b82f6;--blue2:#2563eb;--purple:#7c3aed;
+  --teal:#0d9488;--amber:#d97706;
+  --bg:#faf5ef;--bg2:#fff;--bg3:#f5e6d3;
+  --border:#e5d5c5;--border2:#d4c4b0;
+  --text:#2d1f14;--muted:#7a6555;--muted2:#a08070;
+  --white:#ffffff;
+  --shadow:0 4px 24px rgba(80,40,20,.1);
+  --shadow2:0 8px 40px rgba(80,40,20,.15)
+}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:66px;background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:var(--shadow)}
+.nav-logo{display:flex;align-items:center;gap:.6rem;cursor:pointer}
+.nav-logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--terra),var(--rose));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.1rem;letter-spacing:-.5px}
+.nav-logo-text{font-size:1.25rem;font-weight:800;color:var(--terra)}
+.nav-logo-text sup{font-size:.6em;vertical-align:super}
+.nav-tabs{display:flex;gap:.3rem;align-items:center}
+.nav-tab{padding:.45rem .9rem;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--muted);transition:all .2s;white-space:nowrap}
+.nav-tab:hover,.nav-tab.on{background:var(--sand);color:var(--terra)}
+.nav-tab.on{background:var(--terra);color:#fff}
+.user-badge{background:var(--sand);color:var(--terra);border:1px solid var(--border);border-radius:20px;padding:.3rem .9rem;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.user-badge:hover{background:var(--terra);color:#fff}
+
+/* DISCLAIMER BANNER */
+.disclaimer-bar{background:linear-gradient(90deg,#fff7ed,#fef3c7);border-bottom:1px solid #fcd34d;padding:.5rem 2rem;font-size:.75rem;color:#92400e;text-align:center}
+.disclaimer-bar a{color:#b45309;text-decoration:underline}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#c1714f 0%,#a85d3d 40%,#d4888a 80%,#e8a98a 100%);padding:5rem 2rem 4rem;text-align:center;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:.4rem 1rem;font-size:.78rem;font-weight:600;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:1rem;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+.hero h1 span{color:#fcd34d}
+.hero-sub{font-size:1.05rem;opacity:.92;max-width:600px;margin:0 auto 2rem;line-height:1.6}
+.user-pills{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:2rem}
+.user-pill{padding:.4rem .9rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;color:#fff}
+.user-pill:hover,.user-pill.on{background:rgba(255,255,255,.95);color:var(--terra)}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-hero-primary{background:#fff;color:var(--terra);padding:.8rem 1.8rem;border-radius:12px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.15);display:inline-flex;align-items:center;gap:.4rem}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-hero-outline{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.6);padding:.8rem 1.8rem;border-radius:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-hero-outline:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+
+/* STATS */
+.stats-bar{display:flex;justify-content:center;flex-wrap:wrap;background:var(--white);border-bottom:1px solid var(--border)}
+.stat-item{flex:1;min-width:120px;padding:1.5rem 1rem;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:1.8rem;font-weight:900;color:var(--terra)}
+.stat-label{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:.2rem}
+
+/* FEATURE CARDS */
+.section{padding:3rem 2rem;max-width:1200px;margin:0 auto}
+.section-title{font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:.4rem}
+.section-sub{color:var(--muted);font-size:.9rem;margin-bottom:2rem}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.feature-card{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.feature-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--rose));opacity:0;transition:opacity .2s}
+.feature-card:hover{border-color:var(--terra-light);box-shadow:var(--shadow2);transform:translateY(-3px)}
+.feature-card:hover::before{opacity:1}
+.card-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem}
+.ci-terra{background:linear-gradient(135deg,#fde8d8,#f5c6a8)}
+.ci-blue{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+.ci-teal{background:linear-gradient(135deg,#ccfbf1,#99f6e4)}
+.ci-purple{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}
+.ci-amber{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.ci-rose{background:linear-gradient(135deg,#ffe4e6,#fecdd3)}
+.card-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.card-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
+.card-tag{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:.8rem}
+.ct-ai{background:#dbeafe;color:#1d4ed8}
+.ct-ver{background:#d1fae5;color:#065f46}
+.ct-edit{background:#fef3c7;color:#92400e}
+.ct-print{background:#f3e8ff;color:#6b21a8}
+.ct-phil{background:#fce7f3;color:#9d174d}
+.ct-fam{background:#ecfdf5;color:#065f46}
+
+/* PAGES */
+.page{display:none}
+.page.on{display:block}
+
+/* GENERATOR */
+.gen-container{max-width:1100px;margin:0 auto;padding:2rem}
+.gen-config-panel{background:var(--white);border-radius:18px;border:1.5px solid var(--border);padding:2rem;margin-bottom:2rem}
+.gen-config-title{font-size:1.1rem;font-weight:800;color:var(--terra);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.gen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.gen-field{display:flex;flex-direction:column;gap:.4rem}
+.gen-field label{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.gen-field select,.gen-field textarea,.gen-field input[type=text]{width:100%;padding:.55rem .8rem;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:.85rem;font-family:inherit;transition:border-color .2s}
+.gen-field select:focus,.gen-field textarea:focus{outline:none;border-color:var(--terra)}
+.gen-field.full{grid-column:1/-1}
+.gen-field textarea{resize:vertical;min-height:80px}
+.btn-gen{background:linear-gradient(135deg,var(--terra),var(--terra2));color:#fff;border:none;padding:.85rem 2rem;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 4px 16px rgba(193,113,79,.4)}
+.btn-gen:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(193,113,79,.5)}
+.lesson-output{display:none;background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:2rem;animation:fadeIn .4s ease}
+.lesson-output.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.lo-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.lo-title{font-size:1.4rem;font-weight:800;color:var(--terra)}
+.lo-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.lo-tag{background:var(--sand);color:var(--terra2);padding:.2rem .65rem;border-radius:20px;font-size:.72rem;font-weight:600}
+.lo-section{margin-bottom:1.5rem}
+.lo-section-title{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.lo-content{font-size:.88rem;color:var(--text);line-height:1.7}
+.lo-steps{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.lo-steps li{font-size:.88rem;color:var(--text);line-height:1.6;padding-left:1.2rem;position:relative}
+.lo-steps li::before{content:"•";position:absolute;left:0;color:var(--terra);font-weight:700}
+.resource-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem}
+.resource-chip{background:var(--sand);color:var(--terra2);padding:.3rem .8rem;border-radius:20px;font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s}
+.resource-chip:hover{background:var(--terra);color:#fff}
+.btn-export{background:var(--sand);color:var(--terra2);border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-export:hover{background:var(--terra);color:#fff;border-color:var(--terra)}
+
+/* RESOURCES */
+.res-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.res-filter-btn{padding:.4rem .9rem;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s}
+.res-filter-btn.on,.res-filter-btn:hover{background:var(--terra);color:#fff;border-color:var(--terra)}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.res-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.2rem;display:flex;gap:1rem;transition:all .2s}
+.res-card:hover{border-color:var(--terra-light);box-shadow:var(--shadow)}
+.res-logo{font-size:2rem;flex-shrink:0}
+.res-info{flex:1;min-width:0}
+.res-name{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.25rem}
+.res-desc{font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:.5rem}
+.res-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.res-tag{padding:.15rem .5rem;border-radius:10px;font-size:.68rem;font-weight:600}
+.rt-free{background:#d1fae5;color:#065f46}
+.rt-k12{background:#dbeafe;color:#1d4ed8}
+.rt-he{background:#ede9fe;color:#5b21b6}
+.rt-sub{background:#fef3c7;color:#92400e}
+.rt-all{background:#f3f4f6;color:#374151}
+.res-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--terra);font-size:.78rem;font-weight:600;text-decoration:none;margin-top:.4rem}
+.res-link:hover{text-decoration:underline}
+.non-affil-note{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:.3rem}
+
+/* PLANNER */
+.planner-container{max-width:1200px;margin:0 auto;padding:2rem}
+.inner-tabs{display:flex;gap:.3rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.inner-tab{padding:.45rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:var(--white);color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.inner-tab.on{background:var(--terra);color:#fff;border-color:var(--terra)}
+.inner-pane{display:none}
+.inner-pane.on{display:block}
+.plan-table-wrap{overflow-x:auto;border-radius:14px;border:1.5px solid var(--border)}
+.plan-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:900px}
+.plan-table th{background:linear-gradient(135deg,var(--terra),var(--terra2));color:#fff;padding:.7rem .8rem;text-align:left;font-size:.75rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.plan-table td{border-bottom:1px solid var(--border);padding:.4rem .5rem;vertical-align:top}
+.plan-table tr:hover td{background:var(--sand3)}
+.plan-input{width:100%;border:1px solid transparent;border-radius:6px;background:transparent;font-size:.8rem;font-family:inherit;padding:.3rem;resize:none;transition:border-color .2s}
+.plan-input:focus{outline:none;border-color:var(--terra);background:var(--white)}
+.planner-actions{display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap}
+.single-form{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.single-form .full{grid-column:1/-1}
+
+/* ASSESSMENT */
+.assess-container{max-width:1100px;margin:0 auto;padding:2rem}
+.rubric-table-wrap{overflow-x:auto;border-radius:14px;border:1.5px solid var(--border)}
+.rubric-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:700px}
+.rubric-table th{background:linear-gradient(135deg,var(--terra),var(--rose));color:#fff;padding:.7rem .9rem;text-align:left}
+.rubric-table td{border:1px solid var(--border);padding:.65rem .9rem;vertical-align:top;font-size:.82rem;line-height:1.5}
+.rubric-table tr:nth-child(even) td{background:var(--sand3)}
+.rubric-score-4{border-left:4px solid #22c55e}
+.rubric-score-3{border-left:4px solid #3b82f6}
+.rubric-score-2{border-left:4px solid #f59e0b}
+.rubric-score-1{border-left:4px solid #ef4444}
+
+/* FRAMEWORK */
+.framework-container{max-width:960px;margin:0 auto;padding:2rem}
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;margin-bottom:2.5rem}
+.pillar-card{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .2s}
+.pillar-card:hover{border-color:var(--terra-light);box-shadow:var(--shadow)}
+.pillar-icon{font-size:2.2rem;margin-bottom:.7rem}
+.pillar-num{font-size:.7rem;font-weight:700;color:var(--terra);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
+.pillar-title{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:.5rem}
+.pillar-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+.bill-card{background:linear-gradient(135deg,var(--terra),var(--rose));border-radius:18px;padding:2rem;color:#fff;margin-bottom:2rem}
+.bill-title{font-size:1.2rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.bill-list{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.bill-list li{font-size:.88rem;line-height:1.6;padding-left:1.5rem;position:relative;opacity:.95}
+.bill-list li::before{content:"✓";position:absolute;left:0;font-weight:700;color:#fcd34d}
+
+/* FOOTER */
+footer{background:var(--terra);color:#fff;padding:2rem;text-align:center;margin-top:4rem}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-logo{font-size:1.3rem;font-weight:900;margin-bottom:.6rem}
+.footer-logo sup{font-size:.65em}
+.footer-desc{font-size:.82rem;opacity:.88;margin-bottom:1rem;line-height:1.6}
+.footer-disclaimer{font-size:.72rem;opacity:.75;margin-top:.8rem;line-height:1.7;border-top:1px solid rgba(255,255,255,.2);padding-top:.8rem}
+.footer-links{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin-bottom:.8rem}
+.footer-links a{color:rgba(255,255,255,.85);font-size:.78rem;text-decoration:none}
+.footer-links a:hover{color:#fff;text-decoration:underline}
+
+/* MISC */
+.gen-box{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.5rem}
+.page-header{background:linear-gradient(135deg,var(--sand),var(--sand2));padding:2rem;border-bottom:1px solid var(--border)}
+.page-header h2{font-size:1.5rem;font-weight:800;color:var(--terra);display:flex;align-items:center;gap:.6rem}
+.page-header p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
+.obs-form{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.5rem}
+.obs-form input,.obs-form textarea{width:100%;padding:.55rem .8rem;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:.85rem;font-family:inherit;margin-top:.3rem}
+.obs-form textarea{resize:vertical;min-height:90px}
+.obs-form label{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.obs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1rem}
+
+@media(max-width:768px){
+  nav{padding:0 1rem}
+  .nav-tabs{gap:.2rem}
+  .nav-tab{padding:.4rem .6rem;font-size:.75rem}
+  .hero{padding:3rem 1rem 2.5rem}
+  .section{padding:2rem 1rem}
+  .gen-grid{grid-template-columns:1fr 1fr}
+  .stats-bar{flex-direction:column}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:1rem}
+}
+@media print{nav,footer,.disclaimer-bar,.btn-gen,.btn-export,.planner-actions,.res-filters,#heroSection{display:none!important}.page{display:block!important}}
+</style>
+</head>
+<body>
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-bar">
+  ⚠️ <strong>Non-Affiliation Notice:</strong> All external resources and platform links on this site are provided for educational reference only. E² EduHub is <strong>not affiliated with, endorsed by, or sponsored by</strong> any third-party platforms (Khan Academy, BBC, TED-Ed, Nearpod, Kahoot, Desmos, PhET, Coursera, edX, Canva, Duolingo, Scratch, Code.org, CK-12, Twinkl, CommonLit, PBS, Scholastic, Google, or any other listed service). All trademarks belong to their respective owners. &bull; 100% Free &bull; No login required &bull; Open to everyone
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="goPage('home')">
+    <div class="nav-logo-mark">E<sup>2</sup></div>
+    <div class="nav-logo-text">E<sup>2</sup> EduHub</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab on" data-page="home">🏠 Home</button>
+    <button class="nav-tab" data-page="generator">⚡ Lesson Generator</button>
+    <button class="nav-tab" data-page="resources">📚 Resources</button>
+    <button class="nav-tab" data-page="planner">📅 Planner</button>
+    <button class="nav-tab" data-page="assessment">✅ Assessment</button>
+    <button class="nav-tab" data-page="framework">🌟 Framework</button>
+  </div>
+  <div class="user-badge" id="userBadge">🎓 Teacher</div>
+</nav>
+
+<!-- HERO -->
+<div id="heroSection">
+  <div class="hero">
+    <div class="hero-badge">✨ All-in-One Educator Platform</div>
+    <h1>Every Student Has the<br><span>Right to Understand</span></h1>
+    <p class="hero-sub">A complete teaching companion for teachers, parents, homeschoolers, schools, universities &amp; institutions. Every subject. Every level. Every learner.</p>
+    <div class="user-pills">
+      <span class="user-pill on" data-role="Teacher">👥 Teachers</span>
+      <span class="user-pill" data-role="Parent">👪 Parents</span>
+      <span class="user-pill" data-role="Homeschooler">🏠 Homeschoolers</span>
+      <span class="user-pill" data-role="School Admin">🏫 Schools</span>
+      <span class="user-pill" data-role="University Lecturer">🏭 Universities</span>
+      <span class="user-pill" data-role="Student">🎓 Students</span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" id="heroGen">⚡ Generate a Lesson Now</button>
+      <button class="btn-hero-outline" id="heroRes">📚 Browse Resources</button>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Curated Resources</div></div>
+    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Subjects</div></div>
+    <div class="stat-item"><div class="stat-num">K–12+HE</div><div class="stat-label">All Levels</div></div>
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">User Types</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Free</div></div>
+    <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Login Required</div></div>
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+<div class="page on" id="page-home">
+  <div class="section">
+    <h2 class="section-title">What Would You Like to Do?</h2>
+    <p class="section-sub">Choose a tool and start creating engaging, adaptive lessons in minutes.</p>
+    <div class="card-grid">
+      <div class="feature-card" id="c1">
+        <div class="card-icon-wrap ci-terra">⚡</div>
+        <div class="card-title">Adaptive Lesson Generator</div>
+        <div class="card-desc">Generate complete, customised lesson plans from dropdown choices — subject, grade, style, duration, differentiation, and more.</div>
+        <span class="card-tag ct-ai">AI-Powered</span>
+      </div>
+      <div class="feature-card" id="c2">
+        <div class="card-icon-wrap ci-blue">📚</div>
+        <div class="card-title">Trusted Resource Library</div>
+        <div class="card-desc">Curated links to Khan Academy, BBC Bitesize, TED-Ed, Nearpod, Desmos, PhET, PBS and 20+ more trusted platforms.</div>
+        <span class="card-tag ct-ver">Verified</span>
+      </div>
+      <div class="feature-card" id="c3">
+        <div class="card-icon-wrap ci-teal">📅</div>
+        <div class="card-title">Weekly Planner</div>
+        <div class="card-desc">Spreadsheet-style weekly lesson planner with objectives, activities, assessments, resources and notes. CSV export.</div>
+        <span class="card-tag ct-edit">Editable</span>
+      </div>
+      <div class="feature-card" id="c4">
+        <div class="card-icon-wrap ci-purple">✅</div>
+        <div class="card-title">Assessment &amp; Rubrics</div>
+        <div class="card-desc">Engagement rubrics, lesson checklists, quick-check question generator, and classroom observation forms.</div>
+        <span class="card-tag ct-print">Printable</span>
+      </div>
+      <div class="feature-card" id="c5">
+        <div class="card-icon-wrap ci-amber">🌟</div>
+        <div class="card-title">E² Teaching Framework</div>
+        <div class="card-desc">The Engage &amp; Empower framework — 4 pillars, Student's Bill of Learning Rights, and teaching philosophy.</div>
+        <span class="card-tag ct-phil">Philosophy</span>
+      </div>
+      <div class="feature-card" id="c6">
+        <div class="card-icon-wrap ci-rose">🏠</div>
+        <div class="card-title">Parent &amp; Homeschool Hub</div>
+        <div class="card-desc">Generate structured home learning plans, find trusted home-education resources and track progress.</div>
+        <span class="card-tag ct-fam">For Families</span>
+      </div>
+    </div>
+  </div>
+  <!-- About section -->
+  <div style="background:var(--white);border-top:1px solid var(--border);padding:3rem 2rem">
+    <div style="max-width:900px;margin:0 auto">
+      <h2 style="font-size:1.4rem;font-weight:800;color:var(--terra);margin-bottom:1rem">💡 About E² EduHub</h2>
+      <p style="color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:.9rem">E² EduHub is a completely free, no-login-required educator platform built on the <strong>Engage &amp; Empower</strong> teaching philosophy. It was designed to give every teacher, parent, homeschooler, and learner access to high-quality lesson planning tools, curated resources, and a principled framework for great teaching.</p>
+      <p style="color:var(--muted);line-height:1.8;font-size:.9rem">Every tool on this platform is open to everyone — no account, no subscription, no paywall. Just education, for everyone.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem">
+        <div style="flex:1;min-width:200px;background:var(--sand);border-radius:12px;padding:1rem">
+          <div style="font-weight:700;color:var(--terra);margin-bottom:.4rem">🔓 No Login Required</div>
+          <div style="font-size:.82rem;color:var(--muted)">All tools work instantly with no account or registration.</div>
+        </div>
+        <div style="flex:1;min-width:200px;background:var(--sand);border-radius:12px;padding:1rem">
+          <div style="font-weight:700;color:var(--terra);margin-bottom:.4rem">🌍 Open to Everyone</div>
+          <div style="font-size:.82rem;color:var(--muted)">Teachers, parents, students, schools — worldwide, for free.</div>
+        </div>
+        <div style="flex:1;min-width:200px;background:var(--sand);border-radius:12px;padding:1rem">
+          <div style="font-weight:700;color:var(--terra);margin-bottom:.4rem">📱 Works Offline</div>
+          <div style="font-size:.82rem;color:var(--muted)">Most tools work without an internet connection once loaded.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- LESSON GENERATOR PAGE -->
+<div class="page" id="page-generator">
+  <div class="page-header">
+    <h2>⚡ Adaptive Lesson Generator</h2>
+    <p>Fill in the dropdowns to generate a complete, customised lesson plan in seconds.</p>
+  </div>
+  <div class="gen-container">
+    <div class="gen-config-panel">
+      <div class="gen-config-title">🌟 Lesson Configuration</div>
+      <div class="gen-grid">
+        <div class="gen-field">
+          <label>Who Is This For?</label>
+          <select id="g-role">
+            <option>Classroom Teacher</option>
+            <option>Homeschool Parent</option>
+            <option>University Lecturer</option>
+            <option>School Admin</option>
+            <option>Private Tutor</option>
+            <option>Student (Self-Study)</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Subject</label>
+          <select id="g-subj">
+            <option>Mathematics</option><option>Science</option><option>Biology</option>
+            <option>Chemistry</option><option>Physics</option><option>English Language</option>
+            <option>English Literature</option><option>History</option><option>Geography</option>
+            <option>Arabic Language</option><option>Islamic Studies</option><option>Art &amp; Design</option>
+            <option>Computer Science</option><option>Physical Education</option><option>Social Studies</option>
+            <option>Economics</option><option>Psychology</option><option>French</option>
+            <option>Spanish</option><option>Other</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Grade / Level</label>
+          <select id="g-grade">
+            <option>KG1/KG2 (Ages 4-6)</option><option>Grade 1-2 (Ages 6-8)</option>
+            <option>Grade 3-4 (Ages 8-10)</option><option>Grade 5-6 (Ages 10-12)</option>
+            <option>Grade 7-8 (Ages 12-14)</option><option>Grade 9-10 (Ages 14-16)</option>
+            <option>Grade 11-12 (Ages 16-18)</option><option>University / Higher Ed</option>
+            <option>Adult Learners</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Learning Style</label>
+          <select id="g-style">
+            <option>Balanced (Mixed Methods)</option><option>Visual (Diagrams, Videos)</option>
+            <option>Kinesthetic (Hands-On)</option><option>Auditory (Discussion)</option>
+            <option>Inquiry-Based</option><option>Project-Based Learning</option>
+            <option>Socratic Method</option><option>Flipped Classroom</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Lesson Duration</label>
+          <select id="g-dur">
+            <option>30 Minutes</option><option>45 Minutes</option><option>60 Minutes</option>
+            <option>90 Minutes</option><option>2 Hours</option><option>Full Day</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Differentiation</label>
+          <select id="g-diff">
+            <option>Mixed Ability</option><option>Gifted &amp; Talented</option>
+            <option>Learning Support / SEN</option><option>EAL / ESL Learners</option>
+            <option>Advanced Learners</option><option>Reluctant Learners</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Bloom's Level</label>
+          <select id="g-bloom">
+            <option>Remember &amp; Understand</option><option>Apply &amp; Analyse</option>
+            <option>Evaluate &amp; Create</option><option>All Levels (Progressive)</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>Tech Tools</label>
+          <select id="g-tech">
+            <option>No Tech (Offline)</option><option>Basic (Slides + Video)</option>
+            <option>Interactive (Nearpod, Kahoot)</option><option>Full Digital (LMS + Apps)</option>
+          </select>
+        </div>
+        <div class="gen-field full">
+          <label>Topic / Objective</label>
+          <input type="text" id="g-topic" placeholder="e.g. Fractions, The Water Cycle, Shakespeare's Macbeth...">
+        </div>
+        <div class="gen-field full">
+          <label>Special Notes (optional)</label>
+          <textarea id="g-notes" placeholder="Any specific requirements, context, student needs, or extra details..."></textarea>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <button class="btn-gen" id="genBtn">⚡ Generate Lesson Plan</button>
+      </div>
+    </div>
+    <div id="lessonOut" class="lesson-output"></div>
+  </div>
+</div>
+
+<!-- RESOURCES PAGE -->
+<div class="page" id="page-resources">
+  <div class="page-header">
+    <h2>📚 Trusted Resource Library</h2>
+    <p>Verified educational resources for every subject, level and learner type.</p>
+  </div>
+  <div class="section">
+    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1.5rem;font-size:.8rem;color:#92400e">
+      ⚠️ <strong>Non-Affiliation Disclaimer:</strong> E² EduHub is not affiliated with, sponsored by, or endorsed by any of the platforms listed below. These links are curated for educational value only. All trademarks, product names, and logos belong to their respective owners. We do not receive any compensation for listing these resources.
+    </div>
+    <div class="res-filters">
+      <button class="res-filter-btn on" data-filter="all">All</button>
+      <button class="res-filter-btn" data-filter="math">Maths</button>
+      <button class="res-filter-btn" data-filter="science">Science</button>
+      <button class="res-filter-btn" data-filter="english">English</button>
+      <button class="res-filter-btn" data-filter="history">History/Geo</button>
+      <button class="res-filter-btn" data-filter="art">Art</button>
+      <button class="res-filter-btn" data-filter="stem">STEM</button>
+      <button class="res-filter-btn" data-filter="lang">Languages</button>
+      <button class="res-filter-btn" data-filter="parent">Parents/Home</button>
+      <button class="res-filter-btn" data-filter="he">Higher Ed</button>
+      <button class="res-filter-btn" data-filter="free">Free Only</button>
+    </div>
+    <div class="res-grid" id="resList"></div>
+  </div>
+</div>
+<!-- PLANNER PAGE -->
+<div class="page" id="page-planner">
+  <div class="page-header">
+    <h2>📅 Weekly Lesson Planner</h2>
+    <p>Build your weekly plan — changes are saved automatically in your browser.</p>
+  </div>
+  <div class="planner-container">
+    <div class="inner-tabs">
+      <button class="inner-tab on" data-itab="pane-weekly">Weekly Grid</button>
+      <button class="inner-tab" data-itab="pane-single">Single Lesson Plan</button>
+    </div>
+    <div class="inner-pane on" id="pane-weekly">
+      <div class="plan-table-wrap">
+        <table class="plan-table">
+          <thead>
+            <tr>
+              <th>Week</th><th>Theme / Topic</th><th>Learning Objectives</th>
+              <th>Activities</th><th>Resources</th><th>Assessment</th>
+              <th>Homework</th><th>Notes</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="planBody"></tbody>
+        </table>
+      </div>
+      <div class="planner-actions">
+        <button class="btn-export" id="addRowBtn">+ Add Row</button>
+        <button class="btn-export" onclick="exportCSV()">📥 Export CSV</button>
+        <button class="btn-export" onclick="window.print()">🗈 Print Plan</button>
+      </div>
+    </div>
+    <div class="inner-pane" id="pane-single">
+      <div class="single-form">
+        <div class="gen-field"><label>Subject</label><input type="text" id="sl-subj" placeholder="e.g. Mathematics"></div>
+        <div class="gen-field"><label>Topic</label><input type="text" id="sl-topic" placeholder="e.g. Quadratic Equations"></div>
+        <div class="gen-field"><label>Grade</label><input type="text" id="sl-grade" placeholder="e.g. Grade 9"></div>
+        <div class="gen-field"><label>Duration</label><input type="text" id="sl-dur" placeholder="e.g. 60 Minutes"></div>
+        <div class="gen-field full"><label>Learning Objectives</label><textarea id="sl-obj" rows="3" placeholder="By end of lesson, students will be able to..."></textarea></div>
+        <div class="gen-field full"><label>Hook / Starter</label><textarea id="sl-hook" rows="3" placeholder="Opening activity to engage students..."></textarea></div>
+        <div class="gen-field full"><label>Main Teaching</label><textarea id="sl-main" rows="4" placeholder="Core content delivery, explanations, demonstrations..."></textarea></div>
+        <div class="gen-field full"><label>Student Activity</label><textarea id="sl-act" rows="3" placeholder="Guided and independent practice tasks..."></textarea></div>
+        <div class="gen-field full"><label>Exit Ticket</label><textarea id="sl-exit" rows="2" placeholder="How will you check understanding before students leave?"></textarea></div>
+        <div class="gen-field full"><label>Differentiation</label><textarea id="sl-diff" rows="2" placeholder="How will you support different learners?"></textarea></div>
+        <div class="full" style="margin-top:.5rem">
+          <button class="btn-export" onclick="printSingleLesson()">📥 Print Lesson Plan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ASSESSMENT PAGE -->
+<div class="page" id="page-assessment">
+  <div class="page-header">
+    <h2>✅ Assessment &amp; Rubrics</h2>
+    <p>Professional assessment tools for every classroom.</p>
+  </div>
+  <div class="assess-container">
+    <div class="inner-tabs">
+      <button class="inner-tab on" data-itab="pane-rubric">Rubric</button>
+      <button class="inner-tab" data-itab="pane-checklist">Checklist</button>
+      <button class="inner-tab" data-itab="pane-quickcheck">Quick Check</button>
+      <button class="inner-tab" data-itab="pane-obs">Observation</button>
+    </div>
+
+    <div class="inner-pane on" id="pane-rubric">
+      <h3 style="font-weight:700;color:var(--text);margin-bottom:1rem">Student Engagement Rubric</h3>
+      <div class="rubric-table-wrap">
+        <table class="rubric-table">
+          <thead><tr><th>Dimension</th><th style="color:#d1fae5">4 — Excellent</th><th style="color:#dbeafe">3 — Good</th><th style="color:#fef3c7">2 — Developing</th><th style="color:#fecaca">1 — Needs Support</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Participation</strong></td><td class="rubric-score-4">Leads discussion, contributes ideas, asks probing questions</td><td class="rubric-score-3">Contributes when asked, volunteers occasionally</td><td class="rubric-score-2">Occasional contributions, needs prompting</td><td class="rubric-score-1">Passive, rarely contributes</td></tr>
+            <tr><td><strong>Understanding</strong></td><td class="rubric-score-4">Can explain and teach others clearly</td><td class="rubric-score-3">Clear understanding, uses correct vocabulary</td><td class="rubric-score-2">Partial understanding, some misconceptions</td><td class="rubric-score-1">Significant misconceptions</td></tr>
+            <tr><td><strong>Effort</strong></td><td class="rubric-score-4">Persists through challenges, seeks to extend</td><td class="rubric-score-3">Consistent effort throughout</td><td class="rubric-score-2">Inconsistent, needs reminders</td><td class="rubric-score-1">Gives up easily, disengaged</td></tr>
+            <tr><td><strong>Collaboration</strong></td><td class="rubric-score-4">Leads and supports peers effectively</td><td class="rubric-score-3">Works well with others</td><td class="rubric-score-2">Some difficulty working with others</td><td class="rubric-score-1">Works in isolation</td></tr>
+            <tr><td><strong>Critical Thinking</strong></td><td class="rubric-score-4">Evaluates, questions assumptions, creates solutions</td><td class="rubric-score-3">Applies and analyses well</td><td class="rubric-score-2">Recalls and understands</td><td class="rubric-score-1">Recall only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:1rem"><button class="btn-export" onclick="window.print()">🖨 Print Rubric</button></div>
+    </div>
+
+    <div class="inner-pane" id="pane-checklist">
+      <h3 style="font-weight:700;color:var(--text);margin-bottom:1rem">Lesson Quality Checklist</h3>
+      <div id="checklistArea"></div>
+    </div>
+
+    <div class="inner-pane" id="pane-quickcheck">
+      <h3 style="font-weight:700;color:var(--text);margin-bottom:1rem">Quick Check Generator</h3>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:1.2rem">Generate exit ticket questions instantly.</p>
+      <div class="gen-box" style="margin-bottom:1.5rem">
+        <div class="gen-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem">
+          <div class="gen-field"><label>Subject</label>
+            <select id="qc-subj"><option>Mathematics</option><option>Science</option><option>English</option><option>History</option><option>Geography</option><option>Other</option></select>
+          </div>
+          <div class="gen-field"><label>Topic</label><input type="text" id="qc-topic" placeholder="e.g. Photosynthesis"></div>
+          <div class="gen-field"><label>Bloom's Level</label>
+            <select id="qc-bloom"><option>Remember</option><option>Understand</option><option>Apply</option><option>Analyse</option><option>Evaluate</option><option>Create</option></select>
+          </div>
+          <div class="gen-field"><label>Questions</label>
+            <select id="qc-num"><option value="3">3</option><option value="5">5</option><option value="8">8</option><option value="10">10</option></select>
+          </div>
+        </div>
+        <button class="btn-gen" id="qcBtn" style="margin-top:1rem">⚡ Generate Questions</button>
+      </div>
+      <div id="qcOut" class="lesson-output"></div>
+    </div>
+
+    <div class="inner-pane" id="pane-obs">
+      <h3 style="font-weight:700;color:var(--text);margin-bottom:1rem">Classroom Observation Form</h3>
+      <div class="obs-form">
+        <div class="obs-grid">
+          <div><label>Teacher</label><input type="text" id="obs-teacher" placeholder="Teacher name"></div>
+          <div><label>Class</label><input type="text" id="obs-class" placeholder="Class / Year group"></div>
+          <div><label>Observer</label><input type="text" id="obs-obs" placeholder="Observer name"></div>
+          <div><label>Date</label><input type="date" id="obs-date"></div>
+        </div>
+        <div style="margin-bottom:1rem"><label>Strengths Observed</label><textarea id="obs-str" rows="4" placeholder="What went particularly well?"></textarea></div>
+        <div style="margin-bottom:1rem"><label>Areas for Development</label><textarea id="obs-dev" rows="4" placeholder="What could be improved?"></textarea></div>
+        <div style="margin-bottom:1rem"><label>Action Steps</label><textarea id="obs-act" rows="3" placeholder="Agreed next steps..."></textarea></div>
+        <button class="btn-export" onclick="window.print()">🖨 Print Form</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FRAMEWORK PAGE -->
+<div class="page" id="page-framework">
+  <div class="page-header">
+    <h2>🌟 E² Teaching Framework</h2>
+    <p>The Engage &amp; Empower philosophy — it is never the student's problem. The teacher adapts first.</p>
+  </div>
+  <div class="framework-container">
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon">👁</div>
+        <div class="pillar-num">Pillar 1</div>
+        <div class="pillar-title">See Every Learner</div>
+        <div class="pillar-desc">Know your students deeply — their backgrounds, strengths, gaps, and what makes them curious. Every student is visible and valued.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🔥</div>
+        <div class="pillar-num">Pillar 2</div>
+        <div class="pillar-title">Ignite Engagement</div>
+        <div class="pillar-desc">Lessons begin with a hook. Content connects to real life. Students feel the purpose of learning today, not someday.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">📈</div>
+        <div class="pillar-num">Pillar 3</div>
+        <div class="pillar-title">Build Understanding</div>
+        <div class="pillar-desc">Scaffold carefully. Check constantly. Never move on until the concept is truly understood — not just memorised.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🌟</div>
+        <div class="pillar-num">Pillar 4</div>
+        <div class="pillar-title">Empower &amp; Release</div>
+        <div class="pillar-desc">Give students agency. Let them question, create, teach each other. True learning happens when students own it.</div>
+      </div>
+    </div>
+
+    <div class="bill-card">
+      <div class="bill-title">📜 Student's Bill of Learning Rights</div>
+      <ul class="bill-list">
+        <li>I have the right to understand — not just to be taught.</li>
+        <li>I have the right to learn at a pace that makes sense for me.</li>
+        <li>I have the right to ask questions without fear.</li>
+        <li>I have the right to make mistakes as part of my learning.</li>
+        <li>I have the right to see myself in the curriculum.</li>
+        <li>I have the right to a teacher who believes in me unconditionally.</li>
+        <li>I have the right to an engaging, relevant and meaningful education.</li>
+        <li>I have the right to know why I am learning what I am learning.</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.8rem">
+      <h3 style="font-weight:800;color:var(--terra);margin-bottom:1rem">💡 Teaching Philosophy</h3>
+      <p style="color:var(--muted);line-height:1.8;font-size:.9rem;margin-bottom:.8rem">The E² Framework is founded on a simple but powerful belief: <strong>when a student doesn't understand, it is never the student's fault</strong>. The teacher must adapt, find another route, try a different example, or change the approach entirely.</p>
+      <p style="color:var(--muted);line-height:1.8;font-size:.9rem;margin-bottom:.8rem">Great teaching is not about delivering content — it is about engineering understanding. It requires deep knowledge of each learner, relentless creativity, and an unshakeable belief that every child can succeed.</p>
+      <p style="color:var(--muted);line-height:1.8;font-size:.9rem">The E² method challenges educators to: <strong>Engage</strong> before you explain, <strong>Empower</strong> before you assess, and always <strong>see the person</strong> before the pupil.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">E<sup>2</sup> EduHub</div>
+    <div class="footer-desc">The All-in-One Educator Platform • Built on the E² Teaching Framework<br>For teachers, parents, homeschoolers, schools &amp; universities worldwide • 100% Free • No login required</div>
+    <div class="footer-links">
+      <a href="#" onclick="goPage('home');return false">Home</a>
+      <a href="#" onclick="goPage('generator');return false">Lesson Generator</a>
+      <a href="#" onclick="goPage('resources');return false">Resources</a>
+      <a href="#" onclick="goPage('planner');return false">Planner</a>
+      <a href="#" onclick="goPage('assessment');return false">Assessment</a>
+      <a href="#" onclick="goPage('framework');return false">Framework</a>
+      <a href="https://github.com/DinaElAhl/E2-EduHub" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="footer-disclaimer">
+      <strong>Non-Affiliation Disclaimer:</strong> E² EduHub is an independent educational tool. It is not affiliated with, endorsed by, or sponsored by any third-party platform, company, institution, or educational authority. All external resource links are provided for educational reference purposes only. Khan Academy, BBC Bitesize, TED-Ed, Nearpod, Kahoot, Desmos, PhET, Coursera, edX, Canva, Duolingo, Scratch, Code.org, CK-12, Twinkl, CommonLit, PBS, Scholastic, National Geographic, Google, ReadWriteThink, Mystery Science, and all other mentioned platforms are independent products. All trademarks and registered trademarks are the property of their respective owners.<br>
+      Open source under the MIT License. Built with ❤️ for educators everywhere.
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+// ===== RESOURCE DATA =====
+var resources=[
+  {name:"Khan Academy",icon:"📚",desc:"Free world-class education. Maths, science, computing, humanities K-12 and beyond.",cats:["math","science","english","history","stem","free"],link:"https://www.khanacademy.org",tags:["Free","K-12","All Subjects"]},
+  {name:"BBC Bitesize",icon:"📺",desc:"BBC free learning platform — UK curriculum, revision videos and interactive quizzes.",cats:["math","science","english","history","free"],link:"https://www.bbc.co.uk/bitesize",tags:["Free","K-12","UK Curriculum"]},
+  {name:"TED-Ed",icon:"🎗",desc:"Short animated lessons on almost every topic — perfect for lesson hooks and starters.",cats:["science","english","history","stem","free"],link:"https://ed.ted.com",tags:["Free","All Levels","Video"]},
+  {name:"National Geographic Education",icon:"🌎",desc:"Geography, science, social studies. Interactive maps, videos, and lesson plans.",cats:["science","history","free"],link:"https://education.nationalgeographic.org",tags:["Free","K-12","Geography"]},
+  {name:"Coursera",icon:"🏫",desc:"University courses from top global institutions. Free to audit most courses.",cats:["he","stem","lang","math","science"],link:"https://www.coursera.org",tags:["Free/Paid","Higher Ed","Certificates"]},
+  {name:"edX",icon:"🎓",desc:"Online courses from MIT, Harvard, and 160+ institutions worldwide.",cats:["he","stem"],link:"https://www.edx.org",tags:["Free/Paid","Higher Ed","Professional"]},
+  {name:"Nearpod",icon:"📱",desc:"Interactive lesson delivery with live polls, quizzes and formative assessments.",cats:["stem","science","math"],link:"https://nearpod.com",tags:["Free/Pro","K-12","Interactive"]},
+  {name:"Kahoot!",icon:"🎮",desc:"Game-based quizzes and challenges that students love. Great for review.",cats:["math","science","english","history","free"],link:"https://kahoot.com",tags:["Free/Pro","K-12","Gamified"]},
+  {name:"Canva for Education",icon:"🎨",desc:"Free for teachers — create presentations, worksheets, posters and infographics.",cats:["art","free"],link:"https://www.canva.com/education",tags:["Free","K-12","Design"]},
+  {name:"Desmos",icon:"📈",desc:"Free graphing calculator and interactive maths activities for all levels.",cats:["math","stem","free"],link:"https://www.desmos.com/teachers",tags:["Free","K-12","Maths"]},
+  {name:"PhET Simulations",icon:"🔬",desc:"Interactive science and maths simulations from University of Colorado Boulder.",cats:["science","math","stem","free"],link:"https://phet.colorado.edu",tags:["Free","K-12+HE","Simulations"]},
+  {name:"PBS LearningMedia",icon:"📺",desc:"Free curriculum-aligned videos and lesson plans from America's public broadcaster.",cats:["science","history","english","math","free"],link:"https://www.pbslearningmedia.org",tags:["Free","K-12","Video"]},
+  {name:"Twinkl",icon:"⭐",desc:"Millions of printable and digital teaching resources for all subjects.",cats:["math","science","english","parent","free"],link:"https://www.twinkl.com",tags:["Free/Pro","K-12","Printables"]},
+  {name:"CommonLit",icon:"📖",desc:"Free reading programme with thousands of texts, comprehension tools and discussions.",cats:["english","free"],link:"https://www.commonlit.org",tags:["Free","Grades 3-12","Reading"]},
+  {name:"Duolingo for Schools",icon:"🦜",desc:"Free language learning — teachers track progress across 40+ languages.",cats:["lang","free"],link:"https://schools.duolingo.com",tags:["Free","K-12+Adults","Languages"]},
+  {name:"Scratch (MIT)",icon:"💻",desc:"Free block-based coding platform. Teaches computational thinking creatively.",cats:["stem","free"],link:"https://scratch.mit.edu",tags:["Free","K-8","Coding"]},
+  {name:"Code.org",icon:"💻",desc:"Free computer science curriculum and activities for all ages K-12.",cats:["stem","free"],link:"https://code.org",tags:["Free","K-12","CS"]},
+  {name:"CK-12",icon:"📜",desc:"Free customisable digital textbooks and practice for science and maths.",cats:["science","math","stem","free"],link:"https://www.ck12.org",tags:["Free","K-12","Textbooks"]},
+  {name:"Scholastic Learn at Home",icon:"📚",desc:"Free day-by-day projects and activities for families and homeschoolers.",cats:["parent","english","free"],link:"https://www.scholastic.com/learnathome",tags:["Free","K-6","Home Learning"]},
+  {name:"ReadWriteThink",icon:"📑",desc:"Free literacy and language arts lesson plans and interactive student tools.",cats:["english","free"],link:"https://www.readwritethink.org",tags:["Free","K-12","Literacy"]},
+  {name:"Google Arts &amp; Culture",icon:"🍠",desc:"Explore museums and cultural heritage from around the world virtually.",cats:["art","history","free"],link:"https://artsandculture.google.com",tags:["Free","All Levels","Art & History"]},
+  {name:"Mystery Science",icon:"🔬",desc:"Open-and-go elementary science lessons — wonderfully engaging questions.",cats:["science","free"],link:"https://mysteryscience.com",tags:["Free/Pro","K-5","Science"]},
+  {name:"Wolfram Alpha",icon:"🧮",desc:"Computational knowledge engine for maths, science, and data analysis.",cats:["math","science","stem","he"],link:"https://www.wolframalpha.com",tags:["Free/Pro","All Levels","Maths"]},
+  {name:"Quizlet",icon:"📊",desc:"Flashcards, games and study tools used by millions of students worldwide.",cats:["english","history","lang","free"],link:"https://quizlet.com",tags:["Free/Pro","All Levels","Study"]},
+  {name:"IXL Learning",icon:"📐",desc:"Personalised practice for maths and English with detailed analytics.",cats:["math","english"],link:"https://www.ixl.com",tags:["Free/Pro","K-12","Practice"]}
+];
+
+function renderRes(filter){
+  var list=document.getElementById("resList");
+  if(!list) return;
+  var f=filter==="all"?resources:resources.filter(function(r){return filter==="free"?r.cats.includes("free"):r.cats.includes(filter);});
+  list.innerHTML=f.map(function(r){
+    return '<div class="res-card"><div class="res-logo">'+r.icon+'</div><div class="res-info"><div class="res-name">'+r.name+'</div><div class="res-desc">'+r.desc+'</div><div class="res-tags">'+r.tags.map(function(t){var c=t.toLowerCase().includes("free")?"rt-free":t.toLowerCase().includes("k-12")||t.toLowerCase().includes("grade")?"rt-k12":t.toLowerCase().includes("higher")||t.toLowerCase().includes("he")?"rt-he":t.toLowerCase().includes("paid")?"rt-sub":"rt-all";return'<span class="res-tag '+c+'">'+t+'</span>';}).join("")+'</div><a href="'+r.link+'" target="_blank" rel="noopener noreferrer" class="res-link">🔗 Visit ↗</a><div class="non-affil-note">External link — not affiliated with E² EduHub</div></div></div>';
+  }).join("");
+}
+renderRes("all");
+document.querySelectorAll(".res-filter-btn").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".res-filter-btn").forEach(function(x){x.classList.remove("on");});b.classList.add("on");renderRes(b.dataset.filter);});});
+
+// ===== PAGE NAVIGATION =====
+function goPage(id){
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("on");});
+  var pg=document.getElementById("page-"+id);
+  if(pg)pg.classList.add("on");
+  document.querySelectorAll(".nav-tab").forEach(function(t){t.classList.toggle("on",t.dataset.page===id);});
+  if(id!=="home")document.getElementById("heroSection").style.display="none";
+  else document.getElementById("heroSection").style.display="";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+window.goPage=goPage;
+
+document.querySelectorAll(".nav-tab").forEach(function(t){t.addEventListener("click",function(){goPage(t.dataset.page);});});
+document.getElementById("heroGen").addEventListener("click",function(){goPage("generator");});
+document.getElementById("heroRes").addEventListener("click",function(){goPage("resources");});
+document.getElementById("c1").addEventListener("click",function(){goPage("generator");});
+document.getElementById("c2").addEventListener("click",function(){goPage("resources");});
+document.getElementById("c3").addEventListener("click",function(){goPage("planner");});
+document.getElementById("c4").addEventListener("click",function(){goPage("assessment");});
+document.getElementById("c5").addEventListener("click",function(){goPage("framework");});
+document.getElementById("c6").addEventListener("click",function(){goPage("generator");});
+
+document.querySelectorAll(".user-pill").forEach(function(p){p.addEventListener("click",function(){document.querySelectorAll(".user-pill").forEach(function(x){x.classList.remove("on");});p.classList.add("on");document.getElementById("userBadge").textContent="🎓 "+p.dataset.role;});});
+
+// ===== INNER TABS =====
+document.querySelectorAll(".inner-tab").forEach(function(t){t.addEventListener("click",function(){var par=t.closest(".page");par.querySelectorAll(".inner-tab").forEach(function(x){x.classList.remove("on");});par.querySelectorAll(".inner-pane").forEach(function(x){x.classList.remove("on");});t.classList.add("on");var pane=par.querySelector("#"+t.dataset.itab);if(pane)pane.classList.add("on");});});
+
+// ===== LESSON GENERATOR =====
+var hooks=["Begin with a thought-provoking real-world question or image that challenges assumptions.","Open with a short 2–3 minute video that shows the concept in action in daily life.","Present a surprising fact or paradox that challenges prior knowledge.","Show a 'before' problem that students will be able to solve by the end of the lesson.","Use a quick poll or show-of-hands to surface what students already know or believe."];
+var activities=["Think-Pair-Share: students discuss in pairs before sharing with the class.","Carousel: groups rotate between stations exploring different aspects of the topic.","Kahoot quiz for instant formative assessment and engagement.","Exit ticket: 3 things learned, 2 questions, 1 real-life connection.","Jigsaw: groups become experts on one aspect, then teach each other.","Mind-mapping: students build a visual concept map of the topic.","Gallery Walk: students annotate displayed work and respond to peers.","Socratic Seminar: structured discussion around a central question."];
+var diffs={"Mixed Ability":"Use tiered tasks — all students access same concept at different levels of complexity.","Gifted & Talented":"Open-ended challenge tasks, real-world application, peer leadership opportunities.","Learning Support / SEN":"Sentence frames, graphic organisers, chunked tasks, additional support, partner work.","EAL / ESL Learners":"Pre-teach vocabulary with visuals. Allow native language notes. Use bilingual glossaries.","Advanced Learners":"Independent research, extension tasks, and peer-teaching opportunities.","Reluctant Learners":"Choice boards, short achievable tasks, celebrate small wins, connect to interests."};
+var blooms={"Remember & Understand":"Focus on clear explanations and recall through low-stakes quizzes and recall activities.","Apply & Analyse":"Problem sets, case studies, comparison tasks, and worked examples.","Evaluate & Create":"Judge, debate, design or produce something original that demonstrates understanding.","All Levels (Progressive)":"Sequence from recall through application to creative, evaluative tasks."};
+var techs={"No Tech (Offline)":"Printed handouts, whiteboards, physical manipulatives, peer discussion, card sorts.","Basic (Slides + Video)":"PowerPoint/Google Slides + one short video clip. Printed worksheets for practice.","Interactive (Nearpod, Kahoot)":"Nearpod for interactive slides. Kahoot for review. Digital exit tickets via Mentimeter.","Full Digital (LMS + Apps)":"LMS + Padlet for collaboration + Loom for teacher video + Flip for student video responses."};
+var resMap={"Mathematics":["math"],"Science":["science"],"Biology":["science"],"Chemistry":["science"],"Physics":["science"],"English Language":["english"],"English Literature":["english"],"History":["history"],"Geography":["history"],"Art & Design":["art"],"Computer Science":["stem"]};
+
+document.getElementById("genBtn").addEventListener("click",function(){
+  var role=document.getElementById("g-role").value,subj=document.getElementById("g-subj").value,grade=document.getElementById("g-grade").value,style=document.getElementById("g-style").value,dur=document.getElementById("g-dur").value,diff=document.getElementById("g-diff").value,bloom=document.getElementById("g-bloom").value,tech=document.getElementById("g-tech").value,topic=document.getElementById("g-topic").value.trim()||subj+" Core Concepts",notes=document.getElementById("g-notes").value.trim();
+  var hook=hooks[Math.floor(Math.random()*hooks.length)],a1=activities[Math.floor(Math.random()*activities.length)],a2=activities[Math.floor(Math.random()*activities.length)];
+  var dNote=diffs[diff]||diffs["Mixed Ability"],bNote=blooms[bloom]||blooms["All Levels (Progressive)"],tNote=techs[tech]||techs["Basic (Slides + Video)"];
+  var cats=resMap[subj]||["free"],relRes=resources.filter(function(r){return cats.some(function(c){return r.cats.includes(c);});}).slice(0,4);
+  var out=document.getElementById("lessonOut");out.className="lesson-output show";
+  out.innerHTML='<div class="lo-header"><div><div class="lo-title">🌟 '+topic+'</div><div class="lo-meta"><span class="lo-tag">'+subj+'</span><span class="lo-tag">'+grade+'</span><span class="lo-tag">'+dur+'</span><span class="lo-tag">'+diff+'</span><span class="lo-tag">'+bloom+'</span></div></div><button class="btn-export" onclick="window.print()">🖨 Print</button></div>'
+  +'<div class="lo-section"><div class="lo-section-title">🌟 Learning Objectives</div><div class="lo-content">By the end of this lesson, students will be able to:<ol style="margin-left:1.2rem;margin-top:.5rem"><li>Recall and explain core concepts of '+topic+'</li><li>Apply understanding through guided and independent tasks</li><li>'+bNote+'</li></ol></div></div>'
+  +'<div class="lo-section"><div class="lo-section-title">🔥 Hook / Starter (5–10 min)</div><div class="lo-content">'+hook+'</div></div>'
+  +'<div class="lo-section"><div class="lo-section-title">📊 Main Teaching (20–30 min)</div><ul class="lo-steps"><li>Introduce '+topic+' with clear explanation and worked examples. Use visuals and demonstrations.</li><li>Check understanding using targeted questioning — cold-call, mini-whiteboards, or digital poll.</li><li>Model the thinking process step-by-step before releasing students to independent practice.</li><li>'+bNote+'</li></ul></div>'
+  +'<div class="lo-section"><div class="lo-section-title">🌟 Student Activities (10–15 min)</div><ul class="lo-steps"><li>'+a1+'</li><li>'+a2+'</li></ul></div>'
+  +'<div class="lo-section"><div class="lo-section-title">♸ Differentiation</div><div class="lo-content"><strong>'+diff+':</strong> '+dNote+'</div></div>'
+  +'<div class="lo-section"><div class="lo-section-title">💻 Technology</div><div class="lo-content">'+tNote+'</div></div>'
+  +(notes?'<div class="lo-section"><div class="lo-section-title">📝 Notes</div><div class="lo-content">'+notes+'</div></div>':"")
+  +'<div class="lo-section"><div class="lo-section-title">🔗 Recommended Resources <span style="font-size:.7rem;font-weight:400;color:var(--muted)">(external links — not affiliated)</span></div><div class="resource-chips">'+relRes.map(function(r){return'<a href="'+r.link+'" target="_blank" rel="noopener noreferrer" class="resource-chip">'+r.icon+' '+r.name+'</a>';}).join("")+'</div></div>'
+  +'<div class="lo-section"><div class="lo-section-title">⏳ Exit Ticket (5 min)</div><div class="lo-content">Ask: <strong>3</strong> things learned &bull; <strong>2</strong> questions still have &bull; <strong>1</strong> real-world connection.</div></div>';
+  out.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+// ===== PLANNER =====
+function addRow(){
+  var tr=document.createElement("tr");
+  var cols=8;
+  var html="";
+  for(var i=0;i<cols;i++)html+='<td><textarea class="plan-input" rows="2" placeholder="..."></textarea></td>';
+  tr.innerHTML=html+'<td><button onclick="this.closest('tr').remove()" style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:1.1rem">✕</button></td>';
+  document.getElementById("planBody").appendChild(tr);
+}
+document.getElementById("addRowBtn").addEventListener("click",addRow);
+for(var i=0;i<3;i++)addRow();
+
+window.exportCSV=function(){
+  var rows=[["Week","Theme","Objectives","Activities","Resources","Assessment","Homework","Notes"]];
+  document.querySelectorAll("#planBody tr").forEach(function(tr){var r=[];tr.querySelectorAll("textarea").forEach(function(ta){r.push('"'+ta.value.replace(/"/g,'\"')+'"');});rows.push(r);});
+  var csv=rows.map(function(r){return r.join(",");}).join("\n");
+  var b=new Blob([csv],{type:"text/csv"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download="e2-lesson-planner.csv";a.click();
+};
+
+window.printSingleLesson=function(){
+  var subj=document.getElementById("sl-subj").value,topic=document.getElementById("sl-topic").value,grade=document.getElementById("sl-grade").value,dur=document.getElementById("sl-dur").value,obj=document.getElementById("sl-obj").value,hook=document.getElementById("sl-hook").value,main=document.getElementById("sl-main").value,act=document.getElementById("sl-act").value,exit=document.getElementById("sl-exit").value,diff=document.getElementById("sl-diff").value;
+  var w=window.open("","_blank");
+  w.document.write('<html><head><title>Lesson Plan</title><style>body{font-family:sans-serif;padding:2rem;max-width:800px;margin:0 auto}h1{color:#c1714f}h2{color:#a85d3d;font-size:1rem;margin-top:1.5rem;border-bottom:1px solid #e5d5c5;padding-bottom:.3rem}p{margin:.5rem 0;line-height:1.6}@media print{}</style></head><body>');
+  w.document.write('<h1>'+topic+' — Lesson Plan</h1>');
+  w.document.write('<p><strong>Subject:</strong> '+subj+' | <strong>Grade:</strong> '+grade+' | <strong>Duration:</strong> '+dur+'</p>');
+  if(obj)w.document.write('<h2>Learning Objectives</h2><p>'+obj.replace(/\n/g,"<br>")+'</p>');
+  if(hook)w.document.write('<h2>Hook / Starter</h2><p>'+hook.replace(/\n/g,"<br>")+'</p>');
+  if(main)w.document.write('<h2>Main Teaching</h2><p>'+main.replace(/\n/g,"<br>")+'</p>');
+  if(act)w.document.write('<h2>Student Activity</h2><p>'+act.replace(/\n/g,"<br>")+'</p>');
+  if(exit)w.document.write('<h2>Exit Ticket</h2><p>'+exit.replace(/\n/g,"<br>")+'</p>');
+  if(diff)w.document.write('<h2>Differentiation</h2><p>'+diff.replace(/\n/g,"<br>")+'</p>');
+  w.document.write('<p style="margin-top:2rem;font-size:.8rem;color:#999">Generated by E² EduHub — Free Educator Platform</p>');
+  w.document.write('</body></html>');w.document.close();w.print();
+};
+
+// ===== CHECKLIST =====
+var checks=["Clear learning objective shared with students at the start","Engaging hook or starter activity used","Prior knowledge activated before new content","Content chunked into manageable steps","Multiple representations used (visual, verbal, written)","Regular comprehension checks throughout lesson","Differentiation addressed for all ability levels","Student-centred activity included","Opportunities for talk, discussion and collaboration","Exit ticket or formative check used","Lesson connected to real world or students' lives","Positive, inclusive, safe environment maintained"];
+var cl=document.getElementById("checklistArea");
+if(cl){cl.innerHTML='<div class="gen-box"><ul style="list-style:none">'+checks.map(function(c,i){return'<li style="margin-bottom:.6rem;display:flex;align-items:center;gap:.7rem"><input type="checkbox" id="ck'+i+'" style="width:18px;height:18px;accent-color:var(--terra)"><label for="ck'+i+'" style="font-size:.88rem;cursor:pointer">'+c+'</label></li>';}).join("")+'</ul><button class="btn-export" onclick="window.print()" style="margin-top:1rem">🖨 Print Checklist</button></div>';}
+
+// ===== QUICK CHECK GENERATOR =====
+var qcT={Remember:["What is the definition of [T]?","List 3 key facts about [T].","Name the main components or stages of [T]."],Understand:["Explain [T] in your own words.","Why is [T] important?","What is the difference between [T] and a related concept?"],Apply:["Use what you know about [T] to solve this problem...","Give a real-world example of [T].","How would you use [T] in everyday life?"],Analyse:["What patterns do you notice in [T]?","Compare and contrast two aspects of [T].","What is the cause and effect relationship in [T]?"],Evaluate:["Do you agree with this approach to [T]? Why or why not?","What is the strongest argument for or against [T]?","What would happen if [T] did not exist?"],Create:["Design your own example of [T].","How would you teach [T] to a younger student?","Create a mind map of everything you know about [T]."]};
+document.getElementById("qcBtn").addEventListener("click",function(){
+  var s=document.getElementById("qc-subj").value,top=document.getElementById("qc-topic").value||s,bl=document.getElementById("qc-bloom").value,num=parseInt(document.getElementById("qc-num").value);
+  var pool=qcT[bl]||qcT.Understand;
+  var qs=[];while(qs.length<num)qs.push(pool[qs.length%pool.length].replace(/[T]/g,top));
+  var o=document.getElementById("qcOut");o.className="lesson-output show";
+  o.innerHTML='<div class="lo-title" style="margin-bottom:1rem">Exit Ticket: '+top+'</div><div class="lo-section-title" style="margin-bottom:.8rem">Bloom's Level: '+bl+'</div><ul class="lo-steps">'+qs.map(function(q,i){return'<li><strong>Q'+(i+1)+':</strong> '+q+'</li>';}).join("")+'</ul><button class="btn-export" onclick="window.print()" style="margin-top:1rem">🖨 Print</button>';
+});
+
+// ===== OBSERVATION DATE =====
+var od=document.getElementById("obs-date");
+if(od)od.value=new Date().toISOString().split("T")[0];
+
+// ===== NAV LOGO CLICK =====
+document.querySelector('.nav-logo').addEventListener('click', function(){ goPage('home'); });
+
+})();
+</script>
+</body>
+</html>
